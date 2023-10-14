@@ -1,30 +1,23 @@
 import { EmailTemplate } from "../components/email-tempplate";
-import { NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 import { Resend } from 'resend';
 import * as React from 'react';
 import { NextApiRequest, NextApiResponse } from "next";
+require('dotenv').config()
+const resend = new Resend(process.env.RESEND_API_KEY);
 
-const resend = new Resend("re_jZMZbyZH_55yRjmSNxZeac9v5a43bqksR");
-
-export async function POST() {
+export async function POST(req: NextRequest) {
+  const reqBody = await req.json();
   try {
     const data = await resend.emails.send({
       from: 'Acme <onboarding@resend.dev>',
       to: ['acypriano@mtsolucoes.com.br'],
-      subject: "Hello world",
-      react: EmailTemplate({ firstName: "Andersen" }) as React.ReactElement,
+      subject: reqBody.data.name,
+      react: EmailTemplate(reqBody.data.name) as React.ReactElement,
     });
-
+    console.log(reqBody);
     return NextResponse.json(data);
   } catch (error) {
     return NextResponse.json({ error });
-  }
-}
-
-export default function handler(req: NextApiRequest, res: NextApiResponse) {
-  if (req.method === 'POST') {
-    // Process a POST request
-  } else {
-    // Handle any other HTTP method
   }
 }
