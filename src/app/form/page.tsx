@@ -12,6 +12,7 @@ export default function Form() {
   };
 
   function sendMail() {
+    console.log('click');
     axios
       .post("http://localhost:3000/api", {
         data: {
