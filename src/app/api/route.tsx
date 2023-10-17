@@ -14,7 +14,6 @@ export async function POST(req: NextRequest) {
       subject: 'Orçamento',
       react: EmailTemplate(reqBody.data) as React.ReactElement,
     });
-    console.log(reqBody);
     return NextResponse.json(data);
   } catch (error) {
     return NextResponse.json({ error });
