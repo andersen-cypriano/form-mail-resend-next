@@ -20,9 +20,7 @@ export default function Form() {
   const handleChangeEmail = (event: React.ChangeEvent<HTMLInputElement>) => {
     setEmail(event.target.value);
   };
-
-
-
+  
   function sendMail() {
     axios
       .post("http://localhost:3000/api", {
